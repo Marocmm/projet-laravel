@@ -14,7 +14,7 @@ class ContactController extends Controller
     public function index()
     {
         $contacts= Contact::all();
-        return view('contacts.index', compact('contacts')); 
+        return view('contacts.index', compact('contacts'));
     }
 
     /**
@@ -37,26 +37,22 @@ class ContactController extends Controller
             'telephone' => 'required|max:255',
 
         ]);
-    
+
         Contact::create($validated);  // Enregistrement en base de données
         return redirect()->route('contacts.index');
-        
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Contact $contact)
-    {
-        return view('contact.show', compact('contact'));
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Contact $contact)
     {
-        return view('contact.show', compact('contact'));
+        return view('contacts.edit', compact('contact'));;
 
     }
 
@@ -69,10 +65,8 @@ class ContactController extends Controller
             'nom' => 'required|max:255',
             'email' => 'required',
             'telephone' => 'required',
-
-
         ]);
-    
+
         $contact->update($validated);  // Met à jour l'article
         return redirect()->route('contacts.index');
     }
