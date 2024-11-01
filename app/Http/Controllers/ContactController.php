@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Contact;
+
 
 class ContactController extends Controller
 {
@@ -11,7 +13,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $contacts= Contact::all();
+        return view('contacts.index', compact('contacts')); 
     }
 
     /**
@@ -19,7 +22,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        //create de champ de formulaire de contact
+        return view ('contacts.create');
     }
 
     /**
@@ -27,7 +31,16 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nom' => 'required|max:255',
+            'email' => 'required|max:255',
+            'telephone' => 'required|max:255',
+
+        ]);
+    
+        Contact::create($validated);  // Enregistrement en base de données
+        return redirect()->route('contacts.index');
+        
     }
 
     /**
